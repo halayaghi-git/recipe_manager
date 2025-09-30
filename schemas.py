@@ -14,4 +14,4 @@ class RecipeCreate(RecipeBase): # to create a new recipe, we refer to the base c
 class Recipe(RecipeBase): # to read a recipe from the db, refer to base class schema and id
     id: int
     class Config:
-        orm_mode = True
+        from_attributes = True

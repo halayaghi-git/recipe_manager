@@ -32,12 +32,24 @@ def delete_recipe(db: Session, recipe_id: int): # to Delete a recipe by its id
         db.commit()
     return db_recipe
 
-def search_recipes(db: Session, ingredient=None, cuisine=None, meal_type=None): # to search recipes based on ingredient, cuisine, or meal type (the extra feature)
+def search_recipes(db: Session, query: str): # to search recipes based on query string
+    return db.query(Recipe).filter(
+        (Recipe.title.contains(query)) |
+        (Recipe.cuisine.contains(query)) |
+        (Recipe.meal_type.contains(query)) |
+        (Recipe.ingredients.contains(query))
+    ).all()
+
+def filter_recipes(db: Session, meal_type: str = None, cuisine: str = None): # to filter recipes by meal_type and/or cuisine
     query = db.query(Recipe)
-    if ingredient:
-        query = query.filter(Recipe.ingredients.contains(ingredient))
-    if cuisine:
-        query = query.filter(Recipe.cuisine == cuisine)
     if meal_type:
         query = query.filter(Recipe.meal_type == meal_type)
+    if cuisine:
+        query = query.filter(Recipe.cuisine == cuisine)
     return query.all()
+
+def get_unique_meal_types(db: Session): # to get all unique meal types for filter dropdown
+    return db.query(Recipe.meal_type).distinct().all()
+
+def get_unique_cuisines(db: Session): # to get all unique cuisines for filter dropdown
+    return db.query(Recipe.cuisine).distinct().all()
