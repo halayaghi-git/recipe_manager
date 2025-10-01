@@ -16,7 +16,7 @@ A full-stack web application for managing recipes, built with FastAPI (backend) 
 
 Before running this application, make sure you have:
 
-- **Python ** 
+- **Python** 
 - **Node.js +** 
 - **npm** (comes with Node.js)
 
