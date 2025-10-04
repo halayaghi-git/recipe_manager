@@ -32,7 +32,7 @@ def delete_recipe(db: Session, recipe_id: int): # to Delete a recipe by its id
         db.commit()
     return db_recipe
 
-def search_recipes(db: Session, query: str): # to search recipes based on query string
+def search_recipes(db: Session, query: str): # to search recipes based on query string 
     return db.query(Recipe).filter(
         (Recipe.title.contains(query)) |
         (Recipe.cuisine.contains(query)) |
