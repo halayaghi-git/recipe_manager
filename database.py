@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine # using this library to connect to the database
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, declarative_base  
 # using sqlite for persistent storage
 DATABASE_URL = "sqlite:///./recipes.db" # this url points to the database file
 

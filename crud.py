@@ -10,7 +10,7 @@ def get_recipes(db: Session, skip: int = 0, limit: int = 10): # to get/Read mult
     return db.query(Recipe).offset(skip).limit(limit).all()
 
 def create_recipe(db: Session, recipe: RecipeCreate): # to Create a new recipe 
-    db_recipe = Recipe(**recipe.dict()) # creating a new recipe object using the data from the RecipeCreate schema
+    db_recipe = Recipe(**recipe.model_dump()) # creating a new recipe object using the data from the RecipeCreate schema
     db.add(db_recipe) # adding the new recipe to the database session
     db.commit() # saving
     db.refresh(db_recipe) # refreshing the instance to get the new id
@@ -19,7 +19,7 @@ def create_recipe(db: Session, recipe: RecipeCreate): # to Create a new recipe
 def update_recipe(db: Session, recipe_id: int, recipe: RecipeCreate): # to Update an existing recipe by its id
     db_recipe = get_recipe(db, recipe_id) # first we get the existing recipe from the db by id
     if db_recipe: # if the recipe exists
-        for key, value in recipe.dict().items(): 
+        for key, value in recipe.model_dump().items(): 
             setattr(db_recipe, key, value) # updating
         db.commit()
         db.refresh(db_recipe)
