@@ -1,24 +1,37 @@
 # Recipe Manager
 
-A full-stack web application for managing recipes, built with FastAPI (backend) and React (frontend).
+A web application for managing recipes, built with FastAPI (backend) and React (frontend).
 
 ## Features
-
-- Add new recipes with ingredients and instructions (Create)
-- Search recipes by name or ingredients (Read)
-- Filter by meal type (breakfast, lunch, dinner, snack, dessert)
-- Filter by cuisine (Italian, Chinese, Mexican, Indian, etc.)
-- Edit existing recipes (Update)
-- Delete recipes (Delete)
-- Web interface
+- CRUD Operations:
+    - Add new recipes with ingredients and instructions (Create)
+    - Read existing recipes (Read)
+    - Edit existing recipes (Update)
+    - Delete recipes (Delete)
+- Search Functionality: 
+    - Search recipes by title, ingredients, or instructions
+- Filter Functionality:
+    - Filter by meal type (breakfast, lunch, dinner, snack, dessert)
+    - Filter by cuisine (Italian, Chinese, Mexican, Indian, etc.)
+- SQLite Database: Stores recipes persistently with SQLAlchemy ORM
+- Interactive API Docs: Automatic OpenAPI/Swagger documentation for backend endpoints
+- Comprehensive Tests: 97% test coverage with 14 focused backend tests
+- Web Interface: User-friendly React frontend for browsing, searching, filtering, adding, editing, and deleting recipes.
 
 ## Prerequisites
-
-Before running this application, make sure you have:
-
-- **Python** 
-- **Node.js +** 
+Before starting, ensure you have the following installed on your system:
+- **Python 3+**
+- **Node.js 18+** (includes npm)
+  - Download from: https://nodejs.org/
+  - Verify install
 - **npm** (comes with Node.js)
+
+## Technologies Used
+- **Framework**: FastAPI 0.117.1
+- **Database**: SQLite with SQLAlchemy 2.0.43
+- **Validation**: Pydantic 2.11.9
+- **Server**: Uvicorn 0.37.0
+- **Testing**: Pytest with coverage reporting
 
 ## Installation
 
@@ -29,22 +42,18 @@ git clone https://github.com/halayaghi-git/recipe_manager.git
 cd recipe_manager
 
 ```
-
-### 2. Backend 
+### 2. Setup Environment
 
 ```bash
-# Create virtual environment (first time only)
+# Create virtual environment
 python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Activate virtual environment
-source venv/bin/activate  
-# Or: venv\Scripts\activate
-
-# Install backend dependencies
-pip install fastapi uvicorn python-multipart sqlalchemy
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-### 3. Frontend 
+### 3. Frontend Setup
 
 ```bash
 # Navigate to frontend directory
@@ -96,7 +105,6 @@ npm start
 6. **Delete recipes** using the delete button on recipe cards
 
 
-
 When the backend is running, you can view the interactive API documentation at:
 **http://localhost:8000/docs**
 
@@ -106,13 +114,66 @@ To stop the servers:
 - Press `Ctrl+C` in each terminal window
 - Or run: `pkill -f "uvicorn"` and `pkill -f "npm start"`
 
+### Project Structure
+```
+recipe_manager/
+├── main.py              # FastAPI application & routes
+├── models.py            # SQLAlchemy database models
+├── schemas.py           # Pydantic data schemas
+├── crud.py              # Database operations
+├── database.py          # Database configuration
+├── requirements.txt     # Project dependencies
+├── requirements-test.txt # Test dependencies
+├── run_tests.sh         # Test runner script
+├── pytest.ini           # Test configuration
+├── README.md            # Project explanation and installation instructions
+└── tests/               # 97% coverage
+    ├── conftest.py      # Test fixtures & config
+    ├── test_api.py      # API endpoint tests (8 tests)
+    ├── test_crud.py     # Database operation tests (5 tests)
+    └── test_models.py   # Model tests (1 test)
+```
+### Testing Strategy
 
-## Technologies Used
+**14 comprehensive tests** achieve **97% code coverage**:
 
-- **Backend**: FastAPI, SQLAlchemy, SQLite
-- **Frontend**: React, Axios, CSS
-- **Database**: SQLite (file-based)
+- **API Tests (8)**: Complete CRUD lifecycle, error handling, search/filter
+- **CRUD Tests (5)**: Database operations, pagination, edge cases  
+- **Model Tests (1)**: SQLAlchemy model validation
 
+### Installing Test Dependencies
+
+To install the testing dependencies, run (in the project root):
+
+```bash
+pip install -r requirements-test.txt
+
+# Running specific test categories
+PYTHONPATH=. pytest tests/test_api.py -v  
+PYTHONPATH=. pytest tests/test_crud.py -v  
+PYTHONPATH=. pytest tests/test_models.py -v
+
+# Running all tests with coverage reporting
+PYTHONPATH=. pytest --cov=. --cov-report=term-missing -v
+```
+
+### Dependencies
+
+**Project (`requirements.txt`):**
+```
+fastapi==0.117.1
+uvicorn[standard]==0.37.0
+SQLAlchemy==2.0.43
+pydantic==2.11.9
+```
+
+**Testing (`requirements-test.txt`):**
+```
+pytest==7.4.0
+pytest-cov==4.1.0
+httpx==0.24.1
+pytest-asyncio==0.21.1
+```
 ---
 
 **Happy cooking!**
