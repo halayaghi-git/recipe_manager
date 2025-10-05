@@ -94,6 +94,22 @@ cd recipe_manager/frontend
 # Start React development server (KEEP RUNNING)
 npm start
 ```
+### Stopping the Servers Quickly
+
+To stop both backend and frontend servers at once, you can use the following commands in a terminal:
+
+```bash
+pkill -f "uvicorn"
+pkill -f "npm start"
+```
+
+This will terminate any running FastAPI (uvicorn) and React (npm start) processes.
+
+## Important Notes
+
+- **Both servers must run simultaneously** 
+- The frontend connects to the backend to fetch recipe data
+- If you see "Failed to fetch recipes", make sure the backend is running
 
 ## Using the Application
 
@@ -117,22 +133,41 @@ To stop the servers:
 ### Project Structure
 ```
 recipe_manager/
-├── main.py              # FastAPI application & routes
-├── models.py            # SQLAlchemy database models
-├── schemas.py           # Pydantic data schemas
-├── crud.py              # Database operations
-├── database.py          # Database configuration
-├── requirements.txt     # Project dependencies
-├── requirements-test.txt # Test dependencies
-├── run_tests.sh         # Test runner script
-├── pytest.ini           # Test configuration
-├── README.md            # Project explanation and installation instructions
-└── tests/               # 97% coverage
-    ├── conftest.py      # Test fixtures & config
-    ├── test_api.py      # API endpoint tests (8 tests)
-    ├── test_crud.py     # Database operation tests (5 tests)
-    └── test_models.py   # Model tests (1 test)
+├── main.py                  # FastAPI application & routes
+├── models.py                # SQLAlchemy database models
+├── schemas.py               # Pydantic data schemas
+├── crud.py                  # Database operations
+├── database.py              # Database configuration
+├── requirements.txt         # Backend dependencies
+├── requirements-test.txt    # Test dependencies
+├── recipes.db               # SQLite database file (auto-generated)
+├── README.md                # Project documentation & running/installation instruction
+├── .gitignore               # Git ignore file
+├── __init__.py              
+├── .coverage                # Test coverage report (auto-generated)
+├── frontend/                # React frontend application
+│   ├── public/              # Static files (index.html, favicon, etc.)
+│   │   ├── index.html
+│   │   └── ...
+│   ├── src/                
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   └── ...
+│   ├── package.json         # Frontend dependencies
+│   ├── package-lock.json    # Locked dependency versions
+│   └── node_modules/        # Frontend dependencies (auto-generated)
+├── venv/                    # Python virtual environment (auto-generated)
+├── .pytest_cache/           # Pytest cache (auto-generated)
+└── tests/                   # Backend tests (97% coverage)
+    ├── __init__.py          # Makes tests a Python package
+    ├── conftest.py          # Test fixtures & configuration 
+    ├── test_api.py          # API endpoint tests (8 tests)
+    ├── test_crud.py         # Database operation tests (5 tests)
+    └── test_models.py       # Database models tests (1 test)
 ```
+
 ### Testing Strategy
 
 **14 comprehensive tests** achieve **97% code coverage**:
